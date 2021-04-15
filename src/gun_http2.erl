@@ -908,12 +908,10 @@ request(State0=#http2_state{socket=Socket, transport=Transport, opts=Opts,
 		http2_machine=HTTP2Machine0}, StreamRef, ReplyTo, Method, Host, Port,
 		Path, Headers0, Body, InitialFlow0, CookieStore0, EvHandler, EvHandlerState0)
 		when is_reference(StreamRef) ->
-	Headers1 = lists:keystore(<<"content-length">>, 1, Headers0,
-		{<<"content-length">>, integer_to_binary(iolist_size(Body))}),
 	{ok, StreamID, HTTP2Machine1} = cow_http2_machine:init_stream(
 		iolist_to_binary(Method), HTTP2Machine0),
 	{ok, PseudoHeaders, Headers, CookieStore} = prepare_headers(
-		State0, Method, Host, Port, Path, Headers1, CookieStore0),
+		State0, Method, Host, Port, Path, Headers0, CookieStore0),
 	Authority = maps:get(authority, PseudoHeaders),
 	RealStreamRef = stream_ref(State0, StreamRef),
 	RequestEvent = #{

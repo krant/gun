@@ -616,7 +616,6 @@ send_request(State=#http_state{socket=Socket, transport=Transport, version=Versi
 	Headers5 = case {Body, Out} of
 		{undefined, body_chunked} when Version =:= 'HTTP/1.0' -> Headers4;
 		{undefined, body_chunked} -> [{<<"transfer-encoding">>, <<"chunked">>}|Headers4];
-		{undefined, _} -> Headers4;
 		_ -> Headers4
 	end,
 	{Headers, CookieStore} = gun_cookies:add_cookie_header(

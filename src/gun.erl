@@ -1315,6 +1315,8 @@ dereference_stream_ref(StreamRef, #state{intermediaries=Intermediaries}) ->
 	case length([http || #{protocol := http} <- Intermediaries]) of
 		0 ->
 			StreamRef;
+		1 ->
+			StreamRef;
 		N ->
 			{_, Tail} = lists:split(N, StreamRef),
 			case Tail of
